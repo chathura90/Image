@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <center>
+      <HBox prefHeight="400.0" prefWidth="950.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="imageView" fitHeight="450.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin></ImageView>
+            <ImageView fx:id="resultImageView" fitHeight="450.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
+               </HBox.margin></ImageView>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <HBox prefHeight="138.0" prefWidth="637.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="25" left="25" right="25" top="25" />
+         </padding>
+            <Button fx:id="button" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#uploadButtonClickAction" text="Upload" textAlignment="CENTER" />
+         <Button fx:id="resetButton" mnemonicParsing="false" onAction="#resetImage" text="Reset">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin>
+         </Button>
+         <Button fx:id="saveButton" mnemonicParsing="false" text="Save">
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin>
+         </Button>
+      </HBox>
+   </bottom>
+   <right>
+      <VBox prefHeight="400.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+         <children>
+            <CheckBox fx:id="convertHSV" mnemonicParsing="false" onAction="#convertHSV" text="Convert to HSV">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </CheckBox>
+            <Label text="Min Hue">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Slider fx:id="hueSliderMin" disable="true" prefHeight="16.0" prefWidth="300.0">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </Slider>
+            <Label text="Min Saturation">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Slider fx:id="saturationSliderMin" disable="true">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </Slider>
+            <Label text="Min Value">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Slider fx:id="valueSliderMin" disable="true">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </Slider>
+            <Label text="Max Hue">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Slider fx:id="hueSliderMax" disable="true" prefHeight="16.0" prefWidth="300.0">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </Slider>
+            <Label text="Max Saturation">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Slider fx:id="saturationSliderMax" disable="true">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </Slider>
+            <Label text="Max Value">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Slider fx:id="valueSliderMax" disable="true">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </Slider>
+         </children>
+      </VBox>
+   </right>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <CheckMenuItem fx:id="greyscale" mnemonicParsing="false" onAction="#convertGrey" text="Grey Scale" />
+                  <CheckMenuItem fx:id="edgeDetection" onAction="#cannyEdgeDetectionImage" mnemonicParsing="false" text="Canny Edge Detection" />
+              <MenuItem mnemonicParsing="false" onAction="#openThresholdWindow" text="Convert HSV" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>
