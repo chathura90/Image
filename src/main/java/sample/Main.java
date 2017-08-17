@@ -1,14 +1,21 @@
 package sample;
 
+import config.*;
 import javafx.application.*;
-import javafx.fxml.*;
-import javafx.scene.*;
 import javafx.stage.*;
+import model.*;
+import org.apache.logging.log4j.*;
+import org.opencv.core.*;
+import org.springframework.context.*;
+import org.springframework.context.annotation.*;
+import org.springframework.stereotype.*;
 
 import java.io.*;
 
+@Service
 public class Main extends Application {
 
+    private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
         launch(args);
@@ -16,12 +23,20 @@ public class Main extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws IOException {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/sample.fxml"));
-        primaryStage.setTitle("Image Processor");
+        logger.info("Starting application");
 
-        primaryStage.setScene(new Scene(root, 1200, 600));
-        primaryStage.show();
+        Platform.setImplicitExit(true);
+
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        ScreensConfig screens = context.getBean(ScreensConfig.class);
+        LanguageModel lang = context.getBean(LanguageModel.class);
+
+        screens.setLangModel(lang);
+        screens.setPrimaryStage(primaryStage);
+        screens.showMainScreen();
+        screens.loadFirst();
     }
 
 

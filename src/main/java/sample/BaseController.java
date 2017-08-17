@@ -1,23 +1,25 @@
 package sample;
 
+import config.*;
+import gui.*;
 import javafx.beans.value.*;
 import javafx.embed.swing.*;
 import javafx.event.*;
 import javafx.fxml.*;
-import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.stage.*;
+import model.*;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.*;
 import org.opencv.imgproc.*;
-import util.*;
+import org.springframework.beans.factory.annotation.*;
 
 import javax.imageio.*;
 import java.awt.image.*;
 import java.io.*;
 
-public class Controller {
+public class BaseController extends Presentation {
 
     @FXML
     private Button button;
@@ -51,8 +53,14 @@ public class Controller {
     double adjHueMin, adjSaturationMin, adjValueMin, adjHueMax, adjSaturationMax, adjValueMax;
     private File file;
     private Image image;
-    private ThresholdController thresholdController =  new ThresholdController();
     private Mat resultMat;
+
+    public BaseController(ScreensConfig config) {
+        super(config);
+    }
+
+    @Autowired
+    private MessageModel model;
 
     @FXML
     public void uploadButtonClickAction(ActionEvent e) throws IOException {
@@ -66,6 +74,7 @@ public class Controller {
                     if(image != null){
                         imageView.setImage(image);
                         resultMat = Imgcodecs.imread(file.getAbsolutePath());
+                        model.setImage(resultMat);
                     }
                 } catch (IOException ex) {
                     System.out.println(file);
@@ -191,12 +200,7 @@ public class Controller {
         valueSliderMax.setValue(255);
         valueSliderMax.valueProperty().addListener(sliderChangeListener);
     }
-    ChangeListener<Number> sliderChangeListener = new ChangeListener<Number>() {
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-            updateImageHSV();
-        }
-    };
+    ChangeListener<Number> sliderChangeListener = (observable, oldValue, newValue) -> updateImageHSV();
 
     private void updateImageHSV(){
 
@@ -223,21 +227,8 @@ public class Controller {
     }
 
     @FXML
-    public void openThresholdWindow(){
-        try{
-            Context.getInstance().setResultImage(image);
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/threshold.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle("Threshold");
-            stage.setOnShowing(thresholdController.shownHandler);
-            stage.setScene(new Scene(root1));
-            stage.show();
-        } catch (IOException e) {
-            System.out.println("Error in opening threshold window");
-        }
+    public void openThresholdWindow() throws IOException {
+         config.loadPopup();
     }
 
    @FXML
@@ -245,9 +236,6 @@ public class Controller {
        if(edgeDetection.isSelected()) {
            Imgproc.Canny(resultMat, resultMat, 60, 60 * 3);
        }
-      /* // Writing the image
-       Imgcodecs.imwrite("E:/OpenCV/chap17/canny_output.jpg", edges);
-       System.out.println("Image Loaded");*/
 
        resultImageView.setImage(convertMatToImage(resultMat));
    }

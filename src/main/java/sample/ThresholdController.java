@@ -12,32 +12,50 @@
  */
 package sample;
 
-import javafx.event.*;
+import config.*;
+import gui.*;
 import javafx.fxml.*;
 import javafx.scene.image.*;
-import javafx.stage.*;
-import util.*;
+import model.*;
+import org.opencv.core.*;
+import org.opencv.imgcodecs.*;
+import org.springframework.beans.factory.annotation.*;
 
-public class ThresholdController {
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+public class ThresholdController extends Modal implements Initializable{
 
     @FXML
     private ImageView thresholdImageView;
 
 
-    final EventHandler<WindowEvent> shownHandler = new EventHandler<WindowEvent>() {
-        @Override
-        public void handle(WindowEvent event) {
-            setInitImage();
-            System.out.println("-----------------------");
-        }
-    };
+    @Autowired
+    private MessageModel model;
 
-    public void setInitImage(){
-     thresholdImageView.setImage(Context.getInstance().getResultImage());
+    public ThresholdController(ScreensConfig config) {
+        super(config);
     }
 
-    public Image getProcessImage(){
-        return thresholdImageView.getImage();
+
+    /**
+     * Called to initialize a controller after its root element has been
+     * completely processed.
+     *
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  <tt>null</tt> if the location is not known.
+     * @param resources The resources used to localize the root object, or <tt>null</tt> if
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        thresholdImageView.setImage(convertMatToImage(model.getImage()));
+    }
+
+    private Image convertMatToImage(Mat mat){
+        MatOfByte buffer = new MatOfByte();
+        Imgcodecs.imencode(".png", mat, buffer);
+        return new Image(new ByteArrayInputStream(buffer.toArray()));
     }
 }
 
