@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.CheckMenuItem?>
@@ -8,13 +9,17 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BaseController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BaseController">
    <center>
       <HBox prefHeight="400.0" prefWidth="950.0" BorderPane.alignment="CENTER">
          <children>
@@ -48,75 +53,47 @@
       </HBox>
    </bottom>
    <right>
-      <VBox prefHeight="400.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="470.0" prefWidth="325.0" BorderPane.alignment="CENTER">
          <children>
-            <CheckBox fx:id="convertHSV" mnemonicParsing="false" onAction="#convertHSV" text="Convert to HSV">
-               <VBox.margin>
-                  <Insets left="10.0" right="10.0" top="5.0" />
-               </VBox.margin>
-            </CheckBox>
-            <Label text="Min Hue">
-               <VBox.margin>
-                  <Insets left="10.0" right="10.0" top="5.0" />
-               </VBox.margin>
-            </Label>
-            <Slider fx:id="hueSliderMin" disable="true" prefHeight="16.0" prefWidth="300.0">
-               <VBox.margin>
-                  <Insets left="10.0" right="10.0" top="5.0" />
-               </VBox.margin>
-            </Slider>
-            <Label text="Min Saturation">
-               <VBox.margin>
-                  <Insets left="10.0" right="10.0" top="5.0" />
-               </VBox.margin>
-            </Label>
-            <Slider fx:id="saturationSliderMin" disable="true">
-               <VBox.margin>
-                  <Insets left="10.0" right="10.0" top="5.0" />
-               </VBox.margin>
-            </Slider>
-            <Label text="Min Value">
-               <VBox.margin>
-                  <Insets left="10.0" right="10.0" top="5.0" />
-               </VBox.margin>
-            </Label>
-            <Slider fx:id="valueSliderMin" disable="true">
-               <VBox.margin>
-                  <Insets left="10.0" right="10.0" top="5.0" />
-               </VBox.margin>
-            </Slider>
-            <Label text="Max Hue">
-               <VBox.margin>
-                  <Insets left="10.0" right="10.0" top="5.0" />
-               </VBox.margin>
-            </Label>
-            <Slider fx:id="hueSliderMax" disable="true" prefHeight="16.0" prefWidth="300.0">
-               <VBox.margin>
-                  <Insets left="10.0" right="10.0" top="5.0" />
-               </VBox.margin>
-            </Slider>
-            <Label text="Max Saturation">
-               <VBox.margin>
-                  <Insets left="10.0" right="10.0" top="5.0" />
-               </VBox.margin>
-            </Label>
-            <Slider fx:id="saturationSliderMax" disable="true">
-               <VBox.margin>
-                  <Insets left="10.0" right="10.0" top="5.0" />
-               </VBox.margin>
-            </Slider>
-            <Label text="Max Value">
-               <VBox.margin>
-                  <Insets left="10.0" right="10.0" top="5.0" />
-               </VBox.margin>
-            </Label>
-            <Slider fx:id="valueSliderMax" disable="true">
-               <VBox.margin>
-                  <Insets left="10.0" right="10.0" top="5.0" />
-               </VBox.margin>
-            </Slider>
-         </children>
-      </VBox>
+            <Accordion>
+              <panes>
+                <TitledPane animated="false" prefHeight="207.0" prefWidth="329.0" text="Canny Edge Detection">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="textThresholdMin" layoutX="120.0" layoutY="85.0" prefHeight="26.0" prefWidth="52.0" />
+                              <Separator layoutX="21.0" layoutY="58.0" prefHeight="0.0" prefWidth="281.0">
+                                 <opaqueInsets>
+                                    <Insets left="5.0" right="5.0" />
+                                 </opaqueInsets>
+                              </Separator>
+                              <Slider fx:id="thresholdMin" layoutX="179.0" layoutY="90.0" />
+                              <Label layoutX="14.0" layoutY="90.0" text="Threshold Min" />
+                              <CheckBox fx:id="automaticDetection" layoutX="14.0" layoutY="23.0" onAction="#automaticCannyEdgeDetection" mnemonicParsing="false" text="Automatic Edge Detection" />
+                              <TextField fx:id="textThresholdMax" layoutX="120.0" layoutY="119.0" prefHeight="26.0" prefWidth="52.0" />
+                              <Slider fx:id="thresholdMax" layoutX="179.0" layoutY="124.0" />
+                              <Label layoutX="14.0" layoutY="124.0" text="Threshold Max" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </TitledPane>
+                <TitledPane animated="false" text="untitled 2">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+                        <children>
+                            <CheckBox fx:id="firstFilter" onAction="#bilateralFilter" layoutX="54.0" layoutY="33.0" mnemonicParsing="false" text="CheckBox" />
+                        </children>
+                    </AnchorPane>
+                  </content>
+                </TitledPane>
+                <TitledPane animated="false" text="untitled 3">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </TitledPane>
+              </panes>
+            </Accordion>
+         </children></VBox>
    </right>
    <top>
       <MenuBar BorderPane.alignment="CENTER">
@@ -129,7 +106,7 @@
           <Menu mnemonicParsing="false" text="Edit">
             <items>
               <CheckMenuItem fx:id="greyscale" mnemonicParsing="false" onAction="#convertGrey" text="Grey Scale" />
-                  <CheckMenuItem fx:id="edgeDetection" onAction="#cannyEdgeDetectionImage" mnemonicParsing="false" text="Canny Edge Detection" />
+                  <CheckMenuItem fx:id="edgeDetection" mnemonicParsing="false" onAction="#cannyEdgeDetectionImage" text="Canny Edge Detection" />
               <MenuItem mnemonicParsing="false" onAction="#openThresholdWindow" text="Convert HSV" />
             </items>
           </Menu>

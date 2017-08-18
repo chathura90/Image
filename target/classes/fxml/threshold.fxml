@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ThresholdController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ThresholdController">
     <VBox prefHeight="400.0" prefWidth="300.0" BorderPane.alignment="CENTER">
         <children>
             <Label text="Min Hue">
@@ -17,7 +17,7 @@
                     <Insets left="10.0" right="10.0" top="5.0" />
                 </VBox.margin>
             </Label>
-            <Slider fx:id="hueSliderMin" disable="true" prefHeight="16.0" prefWidth="300.0">
+            <Slider fx:id="hueSliderMin"  prefHeight="16.0" prefWidth="300.0">
                 <VBox.margin>
                     <Insets left="10.0" right="10.0" top="5.0" />
                 </VBox.margin>
@@ -27,7 +27,7 @@
                     <Insets left="10.0" right="10.0" top="5.0" />
                 </VBox.margin>
             </Label>
-            <Slider fx:id="saturationSliderMin" disable="true">
+            <Slider fx:id="saturationSliderMin" >
                 <VBox.margin>
                     <Insets left="10.0" right="10.0" top="5.0" />
                 </VBox.margin>
@@ -37,7 +37,7 @@
                     <Insets left="10.0" right="10.0" top="5.0" />
                 </VBox.margin>
             </Label>
-            <Slider fx:id="valueSliderMin" disable="true">
+            <Slider fx:id="valueSliderMin" >
                 <VBox.margin>
                     <Insets left="10.0" right="10.0" top="5.0" />
                 </VBox.margin>
@@ -47,7 +47,7 @@
                     <Insets left="10.0" right="10.0" top="5.0" />
                 </VBox.margin>
             </Label>
-            <Slider fx:id="hueSliderMax" disable="true" prefHeight="16.0" prefWidth="300.0">
+            <Slider fx:id="hueSliderMax" prefHeight="16.0" prefWidth="300.0">
                 <VBox.margin>
                     <Insets left="10.0" right="10.0" top="5.0" />
                 </VBox.margin>
@@ -57,7 +57,7 @@
                     <Insets left="10.0" right="10.0" top="5.0" />
                 </VBox.margin>
             </Label>
-            <Slider fx:id="saturationSliderMax" disable="true">
+            <Slider fx:id="saturationSliderMax" >
                 <VBox.margin>
                     <Insets left="10.0" right="10.0" top="5.0" />
                 </VBox.margin>
@@ -67,7 +67,7 @@
                     <Insets left="10.0" right="10.0" top="5.0" />
                 </VBox.margin>
             </Label>
-            <Slider fx:id="valueSliderMax" disable="true">
+            <Slider fx:id="valueSliderMax" >
                 <VBox.margin>
                     <Insets left="10.0" right="10.0" top="5.0" />
                 </VBox.margin>
@@ -75,5 +75,5 @@
         </children>
     </VBox>
    <ImageView fx:id="thresholdImageView" fitHeight="176.0" fitWidth="238.0" layoutX="347.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
-   <Button layoutX="514.0" layoutY="344.0" mnemonicParsing="false" text="Button" />
+   <Button fx:id="convertButton"  onAction="#updateChanges" layoutX="514.0" layoutY="344.0" mnemonicParsing="false" text="Button" />
 </Pane>

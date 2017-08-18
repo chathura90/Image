@@ -31,8 +31,8 @@ public class ScreensConfig implements Observer {
 
     private static final Logger logger = LoggerFactory.getLogger(ScreensConfig.class);
 
-    public static final int WIDTH = 1200;
-    public static final int HEIGHT = 600;
+    public static final int WIDTH = 1300;
+    public static final int HEIGHT = 700;
     public static final String STYLE_FILE = "/css/main.css";
 
     private Stage stage;
@@ -63,7 +63,7 @@ public class ScreensConfig implements Observer {
         stage.setTitle("Image Processing");
         scene = new Scene(root, WIDTH, HEIGHT);
         stage.setScene(scene);
-        stage.setResizable(false);
+        stage.setResizable(true);
 
         stage.setOnHiding(event -> {
             System.exit(0);
@@ -119,6 +119,7 @@ public class ScreensConfig implements Observer {
     private Node getNode(final Presentation control, URL location) {
         FXMLLoader loader = new FXMLLoader(location, lang.getBundle());
         loader.setControllerFactory(aClass -> control);
+
 
         try {
             return (Node) loader.load();

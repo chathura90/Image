@@ -36,25 +36,24 @@ public class BaseController extends Presentation {
     @FXML
     private CheckMenuItem edgeDetection;
     @FXML
-    private CheckBox convertHSV;
+    private Slider thresholdMax;
     @FXML
-    private Slider hueSliderMin;
+    private Slider thresholdMin;
     @FXML
-    private Slider saturationSliderMin;
+    private CheckBox automaticDetection;
     @FXML
-    private Slider valueSliderMin;
+    private TextField textThresholdMin;
     @FXML
-    private Slider hueSliderMax;
-    @FXML
-    private Slider saturationSliderMax;
-    @FXML
-    private Slider valueSliderMax;
+    private TextField textThresholdMax;
 
-    double adjHueMin, adjSaturationMin, adjValueMin, adjHueMax, adjSaturationMax, adjValueMax;
+    @FXML
+    private CheckBox firstFilter;
+
     private File file;
     private Image image;
     private Mat resultMat;
-
+    private Mat unedited;
+    int thresMin, thresMax;
     public BaseController(ScreensConfig config) {
         super(config);
     }
@@ -65,7 +64,6 @@ public class BaseController extends Presentation {
     @FXML
     public void uploadButtonClickAction(ActionEvent e) throws IOException {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-                convertHSV.setSelected(false);
                 FileChooser fileChooser = new FileChooser();
                 configureFileChooser(fileChooser);
                 file = fileChooser.showOpenDialog(button.getScene().getWindow());
@@ -113,118 +111,12 @@ public class BaseController extends Presentation {
             MatOfByte buffer = new MatOfByte();
             Imgcodecs.imencode(".png", frame, buffer);
             resultImageView.setImage(new Image(new ByteArrayInputStream(buffer.toArray())));
+            model.setImage(frame);
         } else {
             readAndSetImage();
         }
     }
 
-    @FXML
-    public void convertHSV(ActionEvent e){
-          if(convertHSV.isSelected()){
-              configureHSVSlider();
-              configureSaturationSlider();
-              configureValueSlider();
-
-          } else {
-              hueSliderMin.disableProperty().setValue(true);
-              saturationSliderMin.disableProperty().setValue(true);
-              valueSliderMin.disableProperty().setValue(true);
-              hueSliderMax.disableProperty().setValue(true);
-              saturationSliderMax.disableProperty().setValue(true);
-              valueSliderMax.disableProperty().setValue(true);
-          }
-    }
-
-    private void configureHSVSlider() {
-        hueSliderMin.disableProperty().setValue(false);
-        hueSliderMin.setPrefWidth(300);
-        hueSliderMin.setMin(0);
-        hueSliderMin.setMax(255);
-        hueSliderMin.setMajorTickUnit(25);
-        hueSliderMin.setShowTickMarks(true);
-        hueSliderMin.setShowTickLabels(true);
-        hueSliderMin.setValue(0);
-        hueSliderMin.valueProperty().addListener(sliderChangeListener);
-
-        hueSliderMax.disableProperty().setValue(false);
-        hueSliderMax.setPrefWidth(300);
-        hueSliderMax.setMin(0);
-        hueSliderMax.setMax(255);
-        hueSliderMax.setMajorTickUnit(25);
-        hueSliderMax.setShowTickMarks(true);
-        hueSliderMax.setShowTickLabels(true);
-        hueSliderMax.setValue(255);
-        hueSliderMax.valueProperty().addListener(sliderChangeListener);
-    }
-
-    private void configureSaturationSlider() {
-        saturationSliderMin.disableProperty().setValue(false);
-        saturationSliderMin.setPrefWidth(300);
-        saturationSliderMin.setMin(0);
-        saturationSliderMin.setMax(255);
-        saturationSliderMin.setMajorTickUnit(25);
-        saturationSliderMin.setShowTickMarks(true);
-        saturationSliderMin.setShowTickLabels(true);
-        saturationSliderMin.setValue(0);
-        saturationSliderMin.valueProperty().addListener(sliderChangeListener);
-
-        saturationSliderMax.disableProperty().setValue(false);
-        saturationSliderMax.setPrefWidth(300);
-        saturationSliderMax.setMin(0);
-        saturationSliderMax.setMax(255);
-        saturationSliderMax.setMajorTickUnit(25);
-        saturationSliderMax.setShowTickMarks(true);
-        saturationSliderMax.setShowTickLabels(true);
-        saturationSliderMax.setValue(255);
-        saturationSliderMax.valueProperty().addListener(sliderChangeListener);
-    }
-
-    private void configureValueSlider() {
-        valueSliderMin.disableProperty().setValue(false);
-        valueSliderMin.setPrefWidth(300);
-        valueSliderMin.setMin(0);
-        valueSliderMin.setMax(255);
-        valueSliderMin.setMajorTickUnit(25);
-        valueSliderMin.setShowTickMarks(true);
-        valueSliderMin.setShowTickLabels(true);
-        valueSliderMin.setValue(0);
-        valueSliderMin.valueProperty().addListener(sliderChangeListener);
-
-        valueSliderMax.disableProperty().setValue(false);
-        valueSliderMax.setPrefWidth(300);
-        valueSliderMax.setMin(0);
-        valueSliderMax.setMax(255);
-        valueSliderMax.setMajorTickUnit(25);
-        valueSliderMax.setShowTickMarks(true);
-        valueSliderMax.setShowTickLabels(true);
-        valueSliderMax.setValue(255);
-        valueSliderMax.valueProperty().addListener(sliderChangeListener);
-    }
-    ChangeListener<Number> sliderChangeListener = (observable, oldValue, newValue) -> updateImageHSV();
-
-    private void updateImageHSV(){
-
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
-        adjHueMin = hueSliderMin.valueProperty().doubleValue();
-        adjSaturationMin = saturationSliderMin.valueProperty().doubleValue();
-        adjValueMin = valueSliderMin.valueProperty().doubleValue();
-
-        adjHueMax = hueSliderMax.valueProperty().doubleValue();
-        adjSaturationMax = saturationSliderMax.valueProperty().doubleValue();
-        adjValueMax = valueSliderMax.valueProperty().doubleValue();
-
-        Mat img = Imgcodecs.imread(file.getAbsolutePath());
-        Mat hsv = img.clone();
-        Imgproc.cvtColor(img, hsv, Imgproc.COLOR_BGR2HSV);
-        Core.inRange(hsv, new Scalar(adjHueMin,adjSaturationMin,adjValueMin), new Scalar(adjHueMax,adjSaturationMax,adjValueMax), hsv);
-
-        resultMat = hsv;
-
-        MatOfByte buffer = new MatOfByte();
-        Imgcodecs.imencode(".png", hsv, buffer);
-        resultImageView.setImage(new Image(new ByteArrayInputStream(buffer.toArray())));
-    }
 
     @FXML
     public void openThresholdWindow() throws IOException {
@@ -234,7 +126,8 @@ public class BaseController extends Presentation {
    @FXML
    public  void cannyEdgeDetectionImage(){
        if(edgeDetection.isSelected()) {
-           Imgproc.Canny(resultMat, resultMat, 60, 60 * 3);
+           double thresholdValue = Imgproc.threshold(resultMat,resultMat,0,255, Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
+           Imgproc.Canny(resultMat, resultMat, thresholdValue * 0.5, thresholdValue);
        }
 
        resultImageView.setImage(convertMatToImage(resultMat));
@@ -258,4 +151,74 @@ public class BaseController extends Presentation {
         }
     }
 
+    @FXML
+    void initialize() {
+
+        model.addObserver((o, arg) -> {
+            resultMat =  model.getImage();
+            resultImageView.setImage(convertMatToImage(resultMat));
+        });
+        configureThresholdSlider();
+    }
+
+    @FXML
+    public void automaticCannyEdgeDetection(){
+
+        if(automaticDetection.isSelected()) {
+            unedited = resultMat.clone();
+            thresholdMax.setDisable(true);
+            thresholdMin.setDisable(true);
+            textThresholdMax.setDisable(true);
+            textThresholdMin.setDisable(true);
+            double thresholdValue = Imgproc.threshold(resultMat,resultMat,0,255, Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
+            Imgproc.Canny(resultMat, resultMat, thresholdValue * 0.5, thresholdValue);
+            resultImageView.setImage(convertMatToImage(resultMat));
+        }else {
+            thresholdMax.setDisable(false);
+            thresholdMin.setDisable(false);
+            textThresholdMax.setDisable(false);
+            textThresholdMin.setDisable(false);
+            resultMat = unedited.clone();
+            resultImageView.setImage(convertMatToImage(unedited));
+        }
+
+    }
+
+    private void configureThresholdSlider() {
+        thresholdMin.disableProperty().setValue(false);
+        thresholdMin.setMin(0);
+        thresholdMin.setMax(255);
+        thresholdMin.setValue(0);
+        thresholdMin.valueProperty().addListener(sliderChangeListener);
+
+        thresholdMax.disableProperty().setValue(false);
+        thresholdMax.setMin(0);
+        thresholdMax.setMax(255);
+        thresholdMax.setValue(255);
+        thresholdMax.valueProperty().addListener(sliderChangeListener);
+    }
+
+    ChangeListener<Number> sliderChangeListener = (observable, oldValue, newValue) -> manualCannyEdgeDetection();
+
+    public void manualCannyEdgeDetection(){
+        Mat toChange = resultMat.clone();
+        thresMin = thresholdMin.valueProperty().intValue();
+        thresMax = thresholdMax.valueProperty().intValue();
+
+        textThresholdMin.setText(String.valueOf(thresMin));
+        textThresholdMax.setText(String.valueOf(thresMax));
+        Imgproc.Canny(toChange, toChange, thresMin, thresMax);
+        resultImageView.setImage(convertMatToImage(toChange));
+    }
+
+
+    @FXML
+    public void bilateralFilter(){
+        if(firstFilter.isSelected()){
+            Mat src = model.getImage();
+            Mat dst = new Mat();
+            Imgproc.bilateralFilter(src, dst, 15, 80, 80, Core.BORDER_DEFAULT);
+            model.setImage(dst);
+        }
+    }
 }
