@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BaseController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" >
    <center>
       <HBox prefHeight="400.0" prefWidth="950.0" BorderPane.alignment="CENTER">
          <children>
@@ -77,12 +77,10 @@
                         </AnchorPane>
                   </content>
                 </TitledPane>
-                <TitledPane animated="false" text="untitled 2">
+                <TitledPane animated="false" text="Filtering">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
-                        <children>
-                            <CheckBox fx:id="firstFilter" onAction="#bilateralFilter" layoutX="54.0" layoutY="33.0" mnemonicParsing="false" text="CheckBox" />
-                        </children>
+                       <fx:include fx:id="filterSetting" source="/fxml/filters.fxml"/>
                     </AnchorPane>
                   </content>
                 </TitledPane>
@@ -106,7 +104,6 @@
           <Menu mnemonicParsing="false" text="Edit">
             <items>
               <CheckMenuItem fx:id="greyscale" mnemonicParsing="false" onAction="#convertGrey" text="Grey Scale" />
-                  <CheckMenuItem fx:id="edgeDetection" mnemonicParsing="false" onAction="#cannyEdgeDetectionImage" text="Canny Edge Detection" />
               <MenuItem mnemonicParsing="false" onAction="#openThresholdWindow" text="Convert HSV" />
             </items>
           </Menu>

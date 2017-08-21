@@ -28,7 +28,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class ThresholdController extends Modal implements Initializable{
+public class ThresholdController extends Modal implements Initializable {
 
     @FXML
     private ImageView thresholdImageView;
@@ -74,7 +74,7 @@ public class ThresholdController extends Modal implements Initializable{
         configureValueSlider();
     }
 
-    private Image convertMatToImage(Mat mat){
+    private Image convertMatToImage(Mat mat) {
         MatOfByte buffer = new MatOfByte();
         Imgcodecs.imencode(".png", mat, buffer);
         return new Image(new ByteArrayInputStream(buffer.toArray()));
@@ -149,7 +149,7 @@ public class ThresholdController extends Modal implements Initializable{
 
     ChangeListener<Number> sliderChangeListener = (observable, oldValue, newValue) -> updateImageHSV();
 
-    private void updateImageHSV(){
+    private void updateImageHSV() {
 
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
@@ -164,7 +164,8 @@ public class ThresholdController extends Modal implements Initializable{
         Mat img = model.getImage();
         Mat hsv = img.clone();
         Imgproc.cvtColor(img, hsv, Imgproc.COLOR_BGR2HSV);
-        Core.inRange(hsv, new Scalar(adjHueMin,adjSaturationMin,adjValueMin), new Scalar(adjHueMax,adjSaturationMax,adjValueMax), hsv);
+        Core.inRange(hsv, new Scalar(adjHueMin, adjSaturationMin, adjValueMin), new Scalar(adjHueMax,
+                adjSaturationMax, adjValueMax), hsv);
 
         result = hsv;
         MatOfByte buffer = new MatOfByte();
@@ -173,7 +174,7 @@ public class ThresholdController extends Modal implements Initializable{
     }
 
     @FXML
-    public void updateChanges(){
+    public void updateChanges() {
         model.setImage(result);
         dialog.close();
     }

@@ -118,8 +118,8 @@ public class ScreensConfig implements Observer {
 
     private Node getNode(final Presentation control, URL location) {
         FXMLLoader loader = new FXMLLoader(location, lang.getBundle());
-        loader.setControllerFactory(aClass -> control);
-
+//        loader.setControllerFactory(aClass -> control);
+           loader.setController(control);
 
         try {
             return (Node) loader.load();
@@ -129,7 +129,7 @@ public class ScreensConfig implements Observer {
         }
     }
 
-    public void loadPopup() {
+    public void loadPopupThreshold() {
         ModalDialog modal = new ModalDialog(popupPresentation(), getClass().getResource("/fxml/threshold.fxml"), stage.getOwner(), lang.getBundle());
 //        modal.setTitle(lang.getBundle().getString("popup.title"));
         modal.setTitle("Threshold Image");
