@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" >
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <HBox prefHeight="400.0" prefWidth="950.0" BorderPane.alignment="CENTER">
          <children>
@@ -57,29 +57,45 @@
          <children>
             <Accordion>
               <panes>
-                <TitledPane animated="false" prefHeight="207.0" prefWidth="329.0" text="Canny Edge Detection">
+                <TitledPane animated="false" text="Edge Detection">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="323.0">
                            <children>
                               <TextField fx:id="textThresholdMin" layoutX="120.0" layoutY="85.0" prefHeight="26.0" prefWidth="52.0" />
-                              <Separator layoutX="21.0" layoutY="58.0" prefHeight="0.0" prefWidth="281.0">
+                              <Separator layoutX="21.0" layoutY="158.0" prefHeight="0.0" prefWidth="281.0">
                                  <opaqueInsets>
                                     <Insets left="5.0" right="5.0" />
                                  </opaqueInsets>
                               </Separator>
                               <Slider fx:id="thresholdMin" layoutX="179.0" layoutY="90.0" />
                               <Label layoutX="14.0" layoutY="90.0" text="Threshold Min" />
-                              <CheckBox fx:id="automaticDetection" layoutX="14.0" layoutY="23.0" onAction="#automaticCannyEdgeDetection" mnemonicParsing="false" text="Automatic Edge Detection" />
+                              <CheckBox fx:id="automaticDetection" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" onAction="#automaticCannyEdgeDetection" text="Automatic Edge Detection" />
                               <TextField fx:id="textThresholdMax" layoutX="120.0" layoutY="119.0" prefHeight="26.0" prefWidth="52.0" />
                               <Slider fx:id="thresholdMax" layoutX="179.0" layoutY="124.0" />
                               <Label layoutX="14.0" layoutY="124.0" text="Threshold Max" />
+                              <Label layoutX="14.0" layoutY="14.0" text="Canny Edge Detection" />
+                              <Label layoutX="14.0" layoutY="169.0" text="Sobel Edge Detection" />
+                              <Slider fx:id="sobelXValue" layoutX="122.0" layoutY="196.0" prefHeight="16.0" prefWidth="93.0" />
+                              <Label layoutX="26.0" layoutY="196.0" text="x-direvative" />
+                              <Label layoutX="26.0" layoutY="235.0" text="y-direvative" />
+                              <Slider fx:id="sobelYValue" layoutX="122.0" layoutY="235.0" prefHeight="16.0" prefWidth="93.0" />
+                              <Separator layoutX="21.0" layoutY="271.0" prefHeight="0.0" prefWidth="281.0">
+                                 <opaqueInsets>
+                                    <Insets left="5.0" right="5.0" />
+                                 </opaqueInsets>
+                              </Separator>
+                              <Label layoutX="14.0" layoutY="282.0" text="Scharr Edge Detection" />
+                              <Slider fx:id="scharrXValue" layoutX="122.0" layoutY="309.0" prefHeight="16.0" prefWidth="93.0" />
+                              <Label layoutX="26.0" layoutY="309.0" text="x-direvative" />
+                              <Label layoutX="26.0" layoutY="348.0" text="y-direvative" />
+                              <Slider fx:id="scharrYValue" layoutX="122.0" layoutY="348.0" prefHeight="16.0" prefWidth="93.0" />
                            </children>
                         </AnchorPane>
                   </content>
                 </TitledPane>
                 <TitledPane animated="false" text="Filtering">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="200.0">
                        <fx:include fx:id="filterSetting" source="/fxml/filters.fxml"/>
                     </AnchorPane>
                   </content>

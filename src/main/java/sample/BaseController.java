@@ -47,6 +47,14 @@ public class BaseController extends Presentation {
     private TextField textThresholdMin;
     @FXML
     private TextField textThresholdMax;
+    @FXML
+    private Slider sobelXValue;
+    @FXML
+    private Slider sobelYValue;
+    @FXML
+    private Slider scharrXValue;
+    @FXML
+    private Slider scharrYValue;
 
     @FXML
     private AnchorPane filterSetting;
@@ -192,9 +200,47 @@ public class BaseController extends Presentation {
         thresholdMax.setMax(255);
         thresholdMax.setValue(255);
         thresholdMax.valueProperty().addListener(sliderChangeListener);
+
+        sobelXValue.disableProperty().setValue(false);
+        sobelXValue.setMin(0);
+        sobelXValue.setMax(1);
+        sobelXValue.setValue(0);
+        sobelXValue.setMajorTickUnit(1);
+        sobelXValue.setShowTickMarks(true);
+        sobelXValue.setShowTickLabels(true);
+        sobelXValue.valueProperty().addListener(sobelEdgeChangeListener);
+
+        sobelYValue.disableProperty().setValue(false);
+        sobelYValue.setMin(0);
+        sobelYValue.setMax(1);
+        sobelYValue.setValue(1);
+        sobelYValue.setMajorTickUnit(1);
+        sobelYValue.setShowTickMarks(true);
+        sobelYValue.setShowTickLabels(true);
+        sobelYValue.valueProperty().addListener(sobelEdgeChangeListener);
+
+        scharrXValue.disableProperty().setValue(false);
+        scharrXValue.setMin(0);
+        scharrXValue.setMax(1);
+        scharrXValue.setValue(0);
+        scharrXValue.setMajorTickUnit(1);
+        scharrXValue.setShowTickMarks(true);
+        scharrXValue.setShowTickLabels(true);
+        scharrXValue.valueProperty().addListener(scharrEdgeChangeListener);
+
+        scharrYValue.disableProperty().setValue(false);
+        scharrYValue.setMin(0);
+        scharrYValue.setMax(1);
+        scharrYValue.setValue(1);
+        scharrYValue.setMajorTickUnit(1);
+        scharrYValue.setShowTickMarks(true);
+        scharrYValue.setShowTickLabels(true);
+        scharrYValue.valueProperty().addListener(scharrEdgeChangeListener);
     }
 
     ChangeListener<Number> sliderChangeListener = (observable, oldValue, newValue) -> manualCannyEdgeDetection();
+    ChangeListener<Number> sobelEdgeChangeListener = (observable, oldValue, newValue) -> sobelEdgeDetection();
+    ChangeListener<Number> scharrEdgeChangeListener = (observable, oldValue, newValue) -> scharrEdgeDetection();
 
     public void manualCannyEdgeDetection() {
         Mat toChange = resultMat.clone();
@@ -206,5 +252,26 @@ public class BaseController extends Presentation {
         Imgproc.Canny(toChange, toChange, thresMin, thresMax);
         resultImageView.setImage(convertMatToImage(toChange));
     }
+
+    public void sobelEdgeDetection(){
+
+        Mat dst = resultMat.clone();
+        int xValue = sobelXValue.valueProperty().intValue();
+        int yValue = sobelYValue.valueProperty().intValue();
+
+        Imgproc.Sobel(dst, dst, -1, xValue, yValue);
+        resultImageView.setImage(convertMatToImage(dst));
+    }
+
+    public void scharrEdgeDetection(){
+
+        Mat dst = resultMat.clone();
+        int xValue = scharrXValue.valueProperty().intValue();
+        int yValue = scharrYValue.valueProperty().intValue();
+
+        Imgproc.Scharr(dst, dst, Imgproc.CV_SCHARR, xValue, yValue);
+        resultImageView.setImage(convertMatToImage(dst));
+    }
+
 
 }
