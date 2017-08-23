@@ -40,23 +40,23 @@ public class ScreensConfig implements Observer {
     private LanguageModel lang;
     private StackPane root;
 
-    public void setPrimaryStage(Stage primaryStage){
+    public void setPrimaryStage(Stage primaryStage) {
         this.stage = primaryStage;
     }
 
-    public void setLangModel(LanguageModel lang){
-        if(this.lang != null){
+    public void setLangModel(LanguageModel lang) {
+        if (this.lang != null) {
             this.lang.deleteObserver(this);
         }
         lang.addObserver(this);
         this.lang = lang;
     }
 
-    public ResourceBundle getBundle(){
+    public ResourceBundle getBundle() {
         return lang.getBundle();
     }
 
-    public void showMainScreen(){
+    public void showMainScreen() {
         root = new StackPane();
         root.getStylesheets().add(STYLE_FILE);
         root.getStyleClass().add("main-window");
@@ -97,7 +97,7 @@ public class ScreensConfig implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-          loadFirst();
+        loadFirst();
     }
 
     @Bean
@@ -119,7 +119,7 @@ public class ScreensConfig implements Observer {
     private Node getNode(final Presentation control, URL location) {
         FXMLLoader loader = new FXMLLoader(location, lang.getBundle());
 //        loader.setControllerFactory(aClass -> control);
-           loader.setController(control);
+        loader.setController(control);
 
         try {
             return (Node) loader.load();
@@ -130,7 +130,8 @@ public class ScreensConfig implements Observer {
     }
 
     public void loadPopupThreshold() {
-        ModalDialog modal = new ModalDialog(popupPresentation(), getClass().getResource("/fxml/threshold.fxml"), stage.getOwner(), lang.getBundle());
+        ModalDialog modal = new ModalDialog(popupPresentation(), getClass().getResource("/fxml/threshold.fxml"),
+                stage.getOwner(), lang.getBundle());
 //        modal.setTitle(lang.getBundle().getString("popup.title"));
         modal.setTitle("Threshold Image");
         modal.getStyleSheets().add(STYLE_FILE);

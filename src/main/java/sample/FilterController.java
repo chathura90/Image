@@ -186,12 +186,7 @@ public class FilterController {
         int select = morphologicalOperations.getSelectionModel().getSelectedIndex();
         initiateImage();
 
-        System.out.println("--------------------------"+select);
-        int morph_size = 1;
         Mat dst = new Mat();
-   /*     Mat kernel3 = Imgproc.getStructuringElement(select,
-                new Size(2 * morph_size + 1, 2 * morph_size + 1), new Point(morph_size, morph_size));*/
-
         Mat kernel = Mat.ones(5,5, CvType.CV_32F);
 
         if(select ==  1){

@@ -45,7 +45,7 @@
                <Insets left="10.0" />
             </HBox.margin>
          </Button>
-         <Button fx:id="saveButton" mnemonicParsing="false" text="Save">
+         <Button fx:id="saveButton" onAction="#saveButtonClickAction" mnemonicParsing="false" text="Save">
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin>
@@ -93,16 +93,18 @@
                         </AnchorPane>
                   </content>
                 </TitledPane>
-                <TitledPane animated="false" text="Filtering">
+                <TitledPane animated="true" text="Filtering">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="200.0">
-                       <fx:include fx:id="filterSetting" source="/fxml/filters.fxml"/>
+                       <!--<fx:include fx:id="filterSetting" source="/fxml/filters.fxml"/>-->
                     </AnchorPane>
                   </content>
                 </TitledPane>
-                <TitledPane animated="false" text="untitled 3">
+                <TitledPane animated="true" text="untitled 3">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <!--<fx:include fx:id="fillingSetting" source="/fxml/filling.fxml"/>-->
+                    </AnchorPane>
                   </content>
                 </TitledPane>
               </panes>

@@ -60,6 +60,10 @@ public class BaseController extends Presentation {
     private AnchorPane filterSetting;
     @FXML
     private FilterController filterSettingController;
+    @FXML
+    private AnchorPane fillingSetting;
+    @FXML
+    private FillingController fillingSettingController;
 
     private File file;
     private Mat image;
@@ -76,7 +80,6 @@ public class BaseController extends Presentation {
 
     @FXML
     public void uploadButtonClickAction(ActionEvent e) throws IOException {
-//        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         FileChooser fileChooser = new FileChooser();
         configureFileChooser(fileChooser);
         file = fileChooser.showOpenDialog(button.getScene().getWindow());
@@ -87,6 +90,7 @@ public class BaseController extends Presentation {
     private void uploadInitialProcessing() throws IOException {
 
         filterSettingController.setModel(model);
+        fillingSettingController.setModel(model);
         try {
             BufferedImage bufferedImage = ImageIO.read(file);
             Image fxImage = SwingFXUtils.toFXImage(bufferedImage, null);
@@ -113,6 +117,24 @@ public class BaseController extends Presentation {
                 new FileChooser.ExtensionFilter("JPG", "*.jpg"),
                 new FileChooser.ExtensionFilter("PNG", "*.png")
         );
+    }
+
+    @FXML
+    private void saveButtonClickAction(){
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("JavaFX Projects");
+        File defaultDirectory = new File("/home/chathura/");
+        chooser.setInitialDirectory(defaultDirectory);
+        File selectedDirectory = chooser.showDialog(saveButton.getScene().getWindow());
+        try{
+            Imgcodecs imageCodecs = new Imgcodecs();
+            String file2 = selectedDirectory.getAbsolutePath()+ "/sample.jpg";
+
+            imageCodecs.imwrite(file2, model.getImage());
+
+        } catch (Exception e){
+
+        }
     }
 
     @FXML
