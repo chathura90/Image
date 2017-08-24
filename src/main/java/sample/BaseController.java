@@ -11,6 +11,7 @@ import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import model.*;
+import net.sourceforge.tess4j.*;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.*;
 import org.opencv.imgproc.*;
@@ -30,7 +31,7 @@ public class BaseController extends Presentation {
     @FXML
     private Button resetButton;
     @FXML
-    private Button saveButton;
+    private Button readButton;
     @FXML
     private ImageView imageView;
     @FXML
@@ -55,6 +56,7 @@ public class BaseController extends Presentation {
     private Slider scharrXValue;
     @FXML
     private Slider scharrYValue;
+
 
     @FXML
     private AnchorPane filterSetting;
@@ -120,24 +122,6 @@ public class BaseController extends Presentation {
     }
 
     @FXML
-    private void saveButtonClickAction(){
-        DirectoryChooser chooser = new DirectoryChooser();
-        chooser.setTitle("JavaFX Projects");
-        File defaultDirectory = new File("/home/chathura/");
-        chooser.setInitialDirectory(defaultDirectory);
-        File selectedDirectory = chooser.showDialog(saveButton.getScene().getWindow());
-        try{
-            Imgcodecs imageCodecs = new Imgcodecs();
-            String file2 = selectedDirectory.getAbsolutePath()+ "/sample.jpg";
-
-            imageCodecs.imwrite(file2, model.getImage());
-
-        } catch (Exception e){
-
-        }
-    }
-
-    @FXML
     public void convertGrey(ActionEvent e) throws IOException {
 //        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         if (greyscale.isSelected()) {
@@ -154,6 +138,11 @@ public class BaseController extends Presentation {
     @FXML
     public void openThresholdWindow() throws IOException {
         config.loadPopupThreshold();
+    }
+
+    @FXML
+    public void openSaveDialog(){
+        config.loadSaveImage();
     }
 
 
@@ -295,5 +284,24 @@ public class BaseController extends Presentation {
         resultImageView.setImage(convertMatToImage(dst));
     }
 
+    @FXML
+    public void closeStage(){
+        Stage stage = (Stage) button.getScene().getWindow();
+        stage.close();
+    }
 
+    @FXML
+    public void readText(){
+//        File imageFile = new File("eurotext.tif");
+        ITesseract instance = new Tesseract();  // JNA Interface Mapping
+        instance.setDatapath("/usr/share/tesseract/tessdata");
+        instance.setLanguage("eng");
+        try {
+
+            String result = instance.doOCR(file);
+            System.out.println("----------------------------------"+result);
+        } catch (TesseractException e) {
+            System.err.println(e.getMessage());
+        }
+    }
 }

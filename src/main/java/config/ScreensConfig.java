@@ -112,6 +112,12 @@ public class ScreensConfig implements Observer {
         return new ThresholdController(this);
     }
 
+    @Bean
+    @Scope("prototype")
+    SaveController savePresentation() {
+        return new SaveController(this);
+    }
+
     public void loadFirst() {
         setNode(getNode(firstPresentation(), getClass().getResource("/fxml/sample.fxml")));
     }
@@ -136,6 +142,13 @@ public class ScreensConfig implements Observer {
         modal.setTitle("Threshold Image");
         modal.getStyleSheets().add(STYLE_FILE);
         modal.show();
+    }
+
+    public void loadSaveImage(){
+        ModalDialog modalDialog = new ModalDialog(savePresentation(),getClass().getResource("/fxml/save.fxml"),stage.getOwner(),lang.getBundle());
+        modalDialog.setTitle("Save Image");
+        modalDialog.getStyleSheets().add(STYLE_FILE);
+        modalDialog.show();
     }
 
 }
