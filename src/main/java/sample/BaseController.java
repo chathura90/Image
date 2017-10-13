@@ -141,6 +141,11 @@ public class BaseController extends Presentation {
     }
 
     @FXML
+    public void openComparingWindow() throws IOException {
+        config.loadPopupComparing();
+    }
+
+    @FXML
     public void openSaveDialog(){
         config.loadSaveImage();
     }

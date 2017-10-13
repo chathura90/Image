@@ -125,6 +125,7 @@
             <items>
               <CheckMenuItem fx:id="greyscale" mnemonicParsing="false" onAction="#convertGrey" text="Grey Scale" />
               <MenuItem mnemonicParsing="false" onAction="#openThresholdWindow" text="Convert HSV" />
+              <MenuItem mnemonicParsing="false" onAction="#openComparingWindow" text="Image Comparing" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

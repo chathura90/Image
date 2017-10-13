@@ -25,6 +25,8 @@ public class Main extends Application {
     public void start(final Stage primaryStage) throws IOException {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
+        System.getProperty("java.library.path");
+
         logger.info("Starting application");
 
         Platform.setImplicitExit(true);

@@ -114,6 +114,12 @@ public class ScreensConfig implements Observer {
 
     @Bean
     @Scope("prototype")
+    ComparingController popupComparing() {
+        return new ComparingController(this);
+    }
+
+    @Bean
+    @Scope("prototype")
     SaveController savePresentation() {
         return new SaveController(this);
     }
@@ -140,6 +146,17 @@ public class ScreensConfig implements Observer {
                 stage.getOwner(), lang.getBundle());
 //        modal.setTitle(lang.getBundle().getString("popup.title"));
         modal.setTitle("Threshold Image");
+        modal.getStyleSheets().add(STYLE_FILE);
+        modal.show();
+    }
+
+    public void loadPopupComparing() {
+        ModalDialog modal = new ModalDialog(popupComparing(), getClass().getResource("/fxml/comparing.fxml"),
+                stage.getOwner(), lang.getBundle());
+//        modal.setTitle(lang.getBundle().getString("popup.title"));
+        modal.setHeight(600);
+        modal.setWidth(1000);
+        modal.setTitle("Comparing Image");
         modal.getStyleSheets().add(STYLE_FILE);
         modal.show();
     }
