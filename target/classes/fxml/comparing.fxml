@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="560.0" prefWidth="546.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ComparingController">
+<BorderPane prefHeight="560.0" prefWidth="546.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SURFDetection">
    <center>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -29,17 +29,17 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="compare" mnemonicParsing="false" onAction="#matchingMethod" text="Compare">
+          <!--  <Button fx:id="compare" mnemonicParsing="false" onAction="#matchingMethod" text="Compare">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
-            </Button>
+            </Button>-->
             <Button fx:id="contour" mnemonicParsing="false"  text="Contour">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="Shape" onAction="#shapeDetection" mnemonicParsing="false" text="Shape">
+            <Button fx:id="Shape" onAction="#SURFImplementation" mnemonicParsing="false" text="Shape">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>

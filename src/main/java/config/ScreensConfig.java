@@ -114,8 +114,8 @@ public class ScreensConfig implements Observer {
 
     @Bean
     @Scope("prototype")
-    ComparingController popupComparing() {
-        return new ComparingController(this);
+    SURFDetection popupComparing() {
+        return new SURFDetection(this);
     }
 
     @Bean
